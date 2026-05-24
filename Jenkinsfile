@@ -44,7 +44,10 @@ pipeline {
 
     post {
         failure {
-            echo 'Le pipeline a echoue !'
+            emailext body: 'Le Build $BUILD_NUMBER a echoue. Verifiez Jenkins.',
+                     recipientProviders: [requestor()],
+                     subject: 'Build echoue : $JOB_NAME #$BUILD_NUMBER',
+                     to: 'nantenainabryan95@gmail.com'
         }
         success {
             echo 'Pipeline termine avec succes !'
